@@ -61,11 +61,6 @@ export default {
     currency (val) {
       this.selectedCurrency = val
     }
-  },
-  methods: {
-    setSelectedPrice (...args) {
-      console.log(args)
-    }
   }
 }
 </script>
