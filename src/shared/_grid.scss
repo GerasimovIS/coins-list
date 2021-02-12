@@ -1,0 +1,44 @@
+* {
+  box-sizing: border-box;
+}
+
+$cols: 12;
+$gutter: 8;
+$prefix-map: (
+  '': 0,
+  '-sm': 576,
+  '-md': 768,
+  '-lg': 992,
+  '-xl': 1200
+);
+
+@mixin create-media-query ($breakpoint) {
+  @if ($breakpoint == 0) {
+    @content;
+  } @else {
+    @media screen and (min-width: $breakpoint * 1px) {
+      @content;
+    }
+  }
+}
+
+@mixin create-cols ($prefix, $cols, $breakpoint) {
+  @include create-media-query($breakpoint) {
+    .row { 
+      display: flex; 
+      flex-wrap: wrap;
+      width: 100%;
+    }
+    @for $i from 1 through $cols {
+      .col#{$prefix}-#{$i} {
+        flex-basis: (100 / ($cols / $i)) * 1%;
+        width: (100 / ($cols / $i)) * 1%;
+        padding: 0 #{$gutter}px;
+      }
+    }
+  }
+}
+
+@each $prefix, $breakpoint in $prefix-map {
+  @include create-cols($prefix, $cols, $breakpoint)
+}

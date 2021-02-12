@@ -1,28 +1,44 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="container">
+    <CoinList
+      :items="symbolsPrice"
+      :to-symbols="toSymbols"
+    />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import CoinList from './components/CoinList'
+import { mapState } from 'vuex'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    CoinList
+  },
+  computed: {
+    ...mapState({
+      symbolsPrice: state => state.multipleSymbolsData,
+      toSymbols: state => state.toSymbols
+    })
+  },
+  created () {
+    this.$store.dispatch('fetchSymbolsData')
   }
 }
 </script>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+body {
+  background-color: ghostwhite;
+}
+
+.container {
+  max-width: 980px;
+  width: 100%;
+  margin: 0 auto;
+  height: 100vh;
+  padding: 0 15px;
+  padding-top: 15px;
 }
 </style>
